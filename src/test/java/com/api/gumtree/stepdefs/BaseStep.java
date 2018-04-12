@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class BaseStep {
 
-    protected int getRandomNumber() {
+    public int getRandomNumber() {
         Random rand = new Random();
         return rand.nextInt(10) + 1;
     }

@@ -6,4 +6,7 @@ Feature: As a user
   Scenario: Get User ID and print the email address to console
     Given I have a random user id generated
     When I make a GET call with the user id
-    Then I should print the email ID in the console.
+    Then I should print the email ID in the console
+
+
+
