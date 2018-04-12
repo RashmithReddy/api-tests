@@ -5,6 +5,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
 import com.jayway.restassured.specification.RequestSpecification;
+import cucumber.runtime.java.guice.ScenarioScoped;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Random;
 
 import static com.jayway.restassured.RestAssured.given;
 
+@ScenarioScoped
 public class RestApiInterface {
 
     private Response response;
@@ -23,11 +25,9 @@ public class RestApiInterface {
         Random rand = new Random();
         return rand.nextInt(10) + 1;
     }
-    public Response GetUser(int id) {
-//        int id = getRandomNumber();
+    public void GetUser(int id) {
         response = given().when().get(RestAssured.baseURI + "users/" + id);
         System.out.println("URI "+RestAssured.baseURI + "users/" + id);
-        return response;
     }
 
     public String getUserField(String fieldName) {
@@ -39,9 +39,8 @@ public class RestApiInterface {
         return json;
     }
 
-    public Response getPostsForTheUser(int id) {
+    public void getPostsForTheUser(int id) {
         response = given().when().get(RestAssured.baseURI + "users/" + id + "/posts");
-        return response;
     }
 
     public boolean checkPostIdValid() {
@@ -59,7 +58,9 @@ public class RestApiInterface {
                 }}).
                 when().
                 post(RestAssured.baseURI + "posts");
+    }
 
+    public void validatePostIdExists() {
         JSONObject JSONResponseBody = new JSONObject(response.body().asString());
         //Fetching the desired value of a parameter
         String result = JSONResponseBody.get("id").toString();
